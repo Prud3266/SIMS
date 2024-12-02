@@ -1,0 +1,300 @@
+{
+    "version": "0.1.0",
+    "name": "sims",
+    "instructions": [
+        {
+            "name": "approveRequest",
+            "accounts": [
+                {
+                    "name": "roleData",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "publicKey",
+                    "type": "publicKey"
+                },
+                {
+                    "name": "role",
+                    "type": {
+                        "defined": "Role"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "rejectRequest",
+            "accounts": [
+                {
+                    "name": "roleData",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "publicKey",
+                    "type": "publicKey"
+                }
+            ]
+        },
+        {
+            "name": "joinRequest",
+            "accounts": [
+                {
+                    "name": "roleData",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "verifyRole",
+            "accounts": [
+                {
+                    "name": "roleData",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "role",
+                    "type": {
+                        "defined": "Role"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "uploadGrades",
+            "accounts": [
+                {
+                    "name": "gradeRecord",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "lecturer",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "courseId",
+                    "type": "string"
+                },
+                {
+                    "name": "studentPubkey",
+                    "type": "publicKey"
+                },
+                {
+                    "name": "grade",
+                    "type": "u8"
+                }
+            ]
+        },
+        {
+            "name": "assignCourse",
+            "accounts": [
+                {
+                    "name": "lecturerData",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "admin",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": [
+                {
+                    "name": "courseId",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "registerCourse",
+            "accounts": [
+                {
+                    "name": "courseRegistration",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "student",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "courseId",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "viewGrades",
+            "accounts": [
+                {
+                    "name": "gradeRecord",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        }
+    ],
+    "accounts": [
+        {
+            "name": "RoleData",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "admins",
+                        "type": {
+                            "vec": "publicKey"
+                        }
+                    },
+                    {
+                        "name": "lecturers",
+                        "type": {
+                            "vec": "publicKey"
+                        }
+                    },
+                    {
+                        "name": "students",
+                        "type": {
+                            "vec": "publicKey"
+                        }
+                    },
+                    {
+                        "name": "pendingRequests",
+                        "type": {
+                            "vec": "publicKey"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "GradeRecord",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "courseId",
+                        "type": "string"
+                    },
+                    {
+                        "name": "studentPubkey",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "grade",
+                        "type": "u8"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "LecturerData",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "assignedCourses",
+                        "type": {
+                            "vec": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "CourseRegistration",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "courseId",
+                        "type": "string"
+                    },
+                    {
+                        "name": "studentPubkey",
+                        "type": "publicKey"
+                    }
+                ]
+            }
+        }
+    ],
+    "types": [
+        {
+            "name": "Role",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Admin"
+                    },
+                    {
+                        "name": "Lecturer"
+                    },
+                    {
+                        "name": "Student"
+                    }
+                ]
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "RequestNotFound",
+            "msg": "This public key is not found in pending requests."
+        },
+        {
+            "code": 6001,
+            "name": "DuplicateRequest",
+            "msg": "Duplicate join request."
+        },
+        {
+            "code": 6002,
+            "name": "DuplicateCourse",
+            "msg": "The course is already assigned to this lecturer."
+        }
+    ]
+}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ViewAssignedCourses from "../../components/lecturer/ViewAssignedCourses";
+import SelfAssignCourses from "../../components/lecturer/SelfAssignCourses";
 import UploadGrades from "../../components/lecturer/UploadGrades";
 import UpdateProfile from "../../components/lecturer/UpdateProfile";
 import { useRouter } from "next/navigation";
@@ -19,6 +20,8 @@ export default function LecturerDashboard() {
     switch (activePage) {
       case "viewCourses":
         return <ViewAssignedCourses />;
+      case "selfAssignCourses":
+        return <SelfAssignCourses />;
       case "uploadGrades":
         return <UploadGrades />;
       case "updateProfile":
@@ -40,6 +43,14 @@ export default function LecturerDashboard() {
           } hover:bg-gray-700`}
         >
           View Assigned Courses
+        </button>
+        <button
+          onClick={() => setActivePage("selfAssignCourses")}
+          className={`w-full px-4 py-2 text-left mb-2 rounded-lg ${
+            activePage === "selfAssignCourses" ? "bg-gray-700" : "bg-gray-900"
+          } hover:bg-gray-700`}
+        >
+          Self-Assign Courses
         </button>
         <button
           onClick={() => setActivePage("uploadGrades")}

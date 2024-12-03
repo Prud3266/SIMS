@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function CreateCourse() {
   const [courseDetails, setCourseDetails] = useState({
     courseCode: "",
